@@ -1,6 +1,6 @@
 dataset=$1
 subset=$2
-common="/home/nguyetn/projects/def-jeandiro/nguyetn/Anomaly/datasets"
+common="/content/flownet2pytorch/FlowNet2-pytorch"
 if [ "$dataset" == "UCSDped2" ]; then
     recalc=1
     echo "Processing dataset ${dataset}..."
@@ -147,27 +147,6 @@ elif [ "$dataset" == "Entrance" ]; then
         do
             echo "clip ${i}"
             python3 run_flow_video.py --in_path="${in_path}/${i}" --out_file="${in_path}/${i}_full.npy" --scale 3 --recalc ${recalc}
-        done
-    fi
-elif [ "$dataset" == "UCFcrime" ]; then
-    recalc=0
-    echo "Processing dataset ${dataset}..."
-    if [[ "$subset" == "train" || "$subset" == "both" ]]; then
-        echo "Processing training data..."
-        in_path="${common}/UCF_Crime/tmp/anomaly_detection/clips/Train"
-        for file in ${in_path}/*.mp4
-        do
-            echo "clip ${file}"
-            python3 run_flow_video.py --in_path="${file%.*}.mp4" --out_file="${file%.*}_full.npy" --scale 3 --recalc ${recalc}
-        done
-    fi
-    if [[ "$subset" == "test" || "$subset" == "both" ]]; then
-        echo "Processing test data..."
-        in_path="${common}/UCF_Crime/tmp/anomaly_detection/clips/Test"
-        for file in ${in_path}/*.mp4
-        do
-            echo "clip ${file}"
-            python3 run_flow_video.py --in_path="${file%.*}.mp4" --out_file="${file%.*}_full.npy" --scale 3 --recalc ${recalc}
         done
     fi
 else
